@@ -14,12 +14,8 @@ The following python packages need to be installed and can be downloaded from py
 * virtualenv
 * virtualenvwrapper (>=2.0)
 * virtualenvwrapper.project (>=1.0)
-* github2
+* PyGithub
 * gitpython
-
-The following softwares need to be installed:
-
-* git
 
 Installation
 ------------
@@ -32,7 +28,7 @@ Then, you need to set your GitHub username and api key, you can find your api ke
 settings, under the administration tab.
 Add these two lines to your .bashrc (or .zshrc or whatever your shell is)
 
-    export GITHUB_USERNAME="username"
+    export GITHUB_USER="username"
     export GITHUB_API_TOKEN="api_token"
 
 Usage
