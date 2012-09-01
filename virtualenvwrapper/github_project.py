@@ -44,7 +44,8 @@ def template(args):
     """
     prj_name = args[0]
     print('Initializing git repository and creating GitHub project for %s' % prj_name)
-    src_dir = os.path.join(os.getcwd(), 'src')
+    # src_dir = os.path.join(os.getcwd(), 'src')
+    src_dir = os.getcwd()
 
     env_vars = get_environment()
     if env_vars is None:
@@ -67,10 +68,9 @@ def template(args):
         if choice == 'c':
             print('Cloning repository from %s' % repo.clone_url)
             try:
-                # delete src folder to prevent error when cloning (will be re-created by the clone command)
-                if os.path.exists(src_dir):
-                    os.rmdir(src_dir)
-                Repo.clone_from(git_url, src_dir)
+                # # delete src folder to prevent error when cloning (will be re-created by the clone command)
+                # if os.path.exists(src_dir):
+                #     os.rmdir(src_dir)
                 Repo.clone_from(repo.clone_url, src_dir)
                 repo_created = True
             except GitCommandError:
