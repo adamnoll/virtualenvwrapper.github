@@ -33,7 +33,7 @@ def get_environment():
         env_is_ok = False
     if not env_is_ok:
         return None
-    return (github_user, api_token)
+    return github_user, api_token
 
 
 def template(args):
@@ -44,10 +44,12 @@ def template(args):
     prj_name = args[0]
     print('Initializing git repository and creating GitHub project for %s' % prj_name)
     src_dir = os.path.join(os.getcwd(), 'src')
+
     env_vars = get_environment()
     if env_vars is None:
         print('Repository was not created')
         return
+
     username, api_token = env_vars
     git_url = 'git@github.com:%s/%s.git' % (username, prj_name)
     github = Github(username, api_token)
@@ -56,6 +58,7 @@ def template(args):
         repo_exists = True
     except RuntimeError:
         repo_exists = False
+
     if repo_exists:
         print('Repository already exists on GitHub')
         print('[C]lone or [A]bort? ', end='')
@@ -75,6 +78,7 @@ def template(args):
                 repo_created = False
         else:
             repo_created = False
+
     else:
         prj_desc = raw_input('Project description (default=None): ')
         prj_url = raw_input('Project homepage (default=None): ')
