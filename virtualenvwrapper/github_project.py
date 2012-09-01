@@ -13,7 +13,8 @@ from __future__ import print_function
 import os
 
 from git import *
-from github2.client import Github
+from github import Github, GithubException
+from github.GithubObject import NotSet
 
 
 def get_environment():
@@ -51,12 +52,12 @@ def template(args):
         return
 
     username, api_token = env_vars
-    git_url = 'git@github.com:%s/%s.git' % (username, prj_name)
-    github = Github(username, api_token)
+    github = Github(api_token)
+    github_user = github.get_user()
     try:
-        github.repos.show("%s/%s" % (username, prj_name))
+        repo = github_user.get_repo(prj_name)
         repo_exists = True
-    except RuntimeError:
+    except GithubException:
         repo_exists = False
 
     if repo_exists:
@@ -64,12 +65,13 @@ def template(args):
         print('[C]lone or [A]bort? ', end='')
         choice = raw_input().lower()
         if choice == 'c':
-            print('Cloning repository from %s' % git_url)
+            print('Cloning repository from %s' % repo.clone_url)
             try:
                 # delete src folder to prevent error when cloning (will be re-created by the clone command)
                 if os.path.exists(src_dir):
                     os.rmdir(src_dir)
                 Repo.clone_from(git_url, src_dir)
+                Repo.clone_from(repo.clone_url, src_dir)
                 repo_created = True
             except GitCommandError:
                 print('An error occured while cloning the repository')
@@ -82,12 +84,14 @@ def template(args):
     else:
         prj_desc = raw_input('Project description (default=None): ')
         prj_url = raw_input('Project homepage (default=None): ')
-        github.repos.create(
-                name = prj_name,
-                description = prj_desc if prj_desc else None,
-                homepage = prj_url if prj_url else None,
+        github_user.create_repo(
+                prj_name,
+                description=prj_desc or NotSet,
+                homepage=prj_url or NotSet,
         )
         repo = Repo.init(src_dir)
+        ## TODO: get this from the repo object?
+        git_url = 'git@github.com:%s/%s.git' % (username, prj_name)
         repo.create_remote('origin', git_url)
         repo_created = True
     if repo_created:
