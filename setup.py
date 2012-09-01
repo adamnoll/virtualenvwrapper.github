@@ -138,9 +138,8 @@ setup(
         'virtualenv',
         'virtualenvwrapper (>=2.0)',
         'virtualenvwrapper.project (>=1.0)',
-        'git',
-        'github2',
-        'gitpython',
+        'PyGithub',
+        'gitpython'
     ],
 
     namespace_packages = ['virtualenvwrapper'],
@@ -152,7 +151,7 @@ setup(
                                      ),
     entry_points = {
         'virtualenvwrapper.project.template': [
-            'github = virtualenvwrapper.github:template',
+            'github = virtualenvwrapper.github_project:template',
         ],
     },
 
