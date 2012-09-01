@@ -14,7 +14,7 @@ import os
 import sys
 
 try:
-    long_description = open('README.md.md', 'r').read()
+    long_description = open('README.md', 'r').read()
 except IOError:
     long_description = ''
 
@@ -27,6 +27,7 @@ from fnmatch import fnmatchcase
 # of replicating them:
 standard_exclude = ('*.py', '*.pyc', '*~', '.*', '*.bak', '*.swp*')
 standard_exclude_directories = ('.*', 'CVS', '_darcs', './build', './dist', 'EGG-INFO', '*.egg-info')
+
 
 def find_package_data(
     where='.', package='',
@@ -105,7 +106,7 @@ def find_package_data(
                         break
                 if bad_name:
                     continue
-                out.setdefault(package, []).append(prefix+name)
+                out.setdefault(package, []).append(prefix + name)
     return out
 ################################################################################
 
@@ -132,7 +133,7 @@ setup(
 
     platforms = ('Any',),
 
-    provides = ['virtualenvwrapper.project',],
+    provides = ['virtualenvwrapper.project'],
     requires = [
         'virtualenv',
         'virtualenvwrapper (>=2.0)',
@@ -142,7 +143,7 @@ setup(
         'gitpython',
     ],
 
-    namespace_packages = ['virtualenvwrapper',],
+    namespace_packages = ['virtualenvwrapper'],
     packages = find_packages(),
     include_package_data = True,
     package_data = find_package_data('virtualenvwrapper',

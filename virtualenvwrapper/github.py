@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
+
 #
 # Copyright (c) 2010 MatToufoutu
 #
+
 """
 virtualenvwrapper.project plugin for github repositories
 """
@@ -12,6 +14,7 @@ import os
 
 from git import *
 from github2.client import Github
+
 
 def get_environment():
     """
@@ -31,6 +34,7 @@ def get_environment():
     if not env_is_ok:
         return None
     return (github_user, api_token)
+
 
 def template(args):
     """
